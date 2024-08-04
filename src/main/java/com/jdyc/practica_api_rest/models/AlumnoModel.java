@@ -2,6 +2,8 @@ package com.jdyc.practica_api_rest.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity //modelo real
 @Table (name = "alumno")
 public class AlumnoModel {
@@ -18,7 +20,12 @@ public class AlumnoModel {
     private Integer ciclo;
     private Integer num_celular;
 
+    //En esta parte se añade para poder inciar que Alumno puede tener muchas Cartas de Presentación uno a muchos
+    //mappedBy se refiere al dato que tengo en CartaPresentacionModel linea 16
+    @OneToMany(mappedBy = "dtalumno", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartaPresentacionModel> cartasPresentacion;
 
+    // Set and Get the all
     public void setCod_univer(Long cod_univer) {
         this.cod_univer = cod_univer;
     }
@@ -65,5 +72,13 @@ public class AlumnoModel {
 
     public Integer getNum_celular() {
         return num_celular;
+    }
+
+    public void setCartasPresentacion(List<CartaPresentacionModel> cartasPresentacion) {
+        this.cartasPresentacion = cartasPresentacion;
+    }
+
+    public List<CartaPresentacionModel> getCartasPresentacion() {
+        return cartasPresentacion;
     }
 }
